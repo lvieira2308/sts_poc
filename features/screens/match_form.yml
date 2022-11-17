@@ -1,0 +1,170 @@
+individually:
+  question: "Personal well-being"
+  type: "slider"
+  choices: 10
+
+interpersonally:
+  question: "Family, close relationships"
+  type: "slider"
+  choices: 10
+
+socially:
+  question: "Socially"
+  type: "slider"
+  choices: 10
+
+overall:
+  question: ""
+  type: "slider"
+  choices: 10
+
+evaluation_1:
+  question: "Feel you had nothing to look forward to?"
+  type: "radio"
+  choices: ["none", "some", "good", "most"]
+
+evaluation_2:
+  question: "Feel scared without any good reason?"
+  type: "radio"
+  choices: ["none", "some", "good", "most"]
+
+evaluation_3:
+  question: "Find it hard to wind down?"
+  type: "radio"
+  choices: ["none", "some", "good", "most"]
+
+evaluation_4:
+  question: "Feel guilty about substance use (alcohol, drugs, etc)?"
+  type: "radio"
+  choices: ["none", "some", "good", "most"]
+
+evaluation_5:
+  question: "Select any statements that apply to you:"
+  type: "check_box"
+  choices: ["deeling stuck", "difficulty planning", "doubt myself", "susceptible to stress", "excessively fatigued"]
+
+evaluation_6:
+  question: "Select any statements that apply to you:"
+  type: "check_box"
+  choices: ["sleeping poorly", "physical pain", "difficulty remembering things", "overweight or underweight", "psychiatric medication"]
+
+evaluation_7:
+  question: "Have you been formally diagnosed by a healthcare provider with any of the following?"
+  type: "check_box"
+  choices: ["Behavioural and/or Substance Addictions",
+            "ADHD", "Bipolar Disorder",
+            "Borderline Personality Disorder",
+            "Eating Disorder",
+            "Obsessive Compulsive Disorder (OCD)",
+            "Post-Partum Depression / Anxiety",
+            "PTSD",
+            "Sexual Disorder",
+            "Depressive Disorder",
+            "Anxiety Disorder",
+            "Sleep Disorder",
+            "Gambling Disorder",
+            "Narcissistic Personality Disorder"]
+
+evaluation_8:
+  question: "Are any of these factors causing distress?"
+  type: "check_box"
+  choices: ["Loneliness",
+            "Marital/relationships",
+            "Family Dynamics",
+            "Grief & loss",
+            "Caregiver burnout",
+            "Injury or illness",
+            "Gender identity",
+            "Sexual orientation",
+            "Being abused or neglected",
+            "Financial",
+            "Legal",
+            "Children",
+            "Unemployment",
+            "Retirement",
+            "Procrastination",
+            "Perfectionism",
+            "Sexual difficulties"]
+
+evaluation_9:
+  question: "Do you spend most of your time at work, as a student, or neither?"
+  type: "radio"
+  choices: ["At work", "As a student", "Equally at work and as a student", "Neither"]
+
+evaluation_10:
+  question: "Do any of these cause you distress in your main employment?"
+  type: "check_box"
+  choices: ["High workload",
+            "Lack of control",
+            "Not meaningful",
+            "Not appreciated",
+            "Not treated fairly",
+            "Poor management",
+            "High conflict",
+            "Job uncertainty",
+            "Poor work-life balance",
+            "Sexual harassment",
+            "Bullying",
+            "Racial discrimination",
+            "Gender discrimination"]
+
+evaluation_11:
+  question: "Do any of these cause you distress at your school?"
+  type: "check_box"
+  choices: ["High workload",
+            "Difficulty adjusting",
+            "Difficulty socializing",
+            "High competition",
+            "Expenses",
+            "Future employment",
+            "Not treated fairly",
+            "Poor school-life balance",
+            "Sexual harassment",
+            "Bullying",
+            "Racial discrimination",
+            "Gender discrimination"]
+
+evaluation_12:
+  question: "What is your current school level:"
+  type: "radio"
+  choices: ["Kindergarten-Grade 12", "College", "University", "Other"]
+
+evaluation_13:
+  question: "Will you be using your insurance benefits to pay for sessions after your first complimentary or employer-sponsored session(s)?"
+  type: "radio"
+  choices: ["Yes", "No", "I am not sure"]
+
+evaluation_14:
+  question: "Which of the following types of providers does your coverage include?"
+  type: "radio"
+  choices: ["Counselling Therapist", "Canadian Certified Counsellor", "Registered Social Worker"]
+
+evaluation_15:
+  question: "Select your preferred language"
+  type: "check_box"
+  choices: ["English", "French"]
+
+evaluation_16:
+  question: "Do you prefer a counsellor with any of the following specialities?"
+  type: "check_box"
+  choices: ["Parenting", "Trauma", "First Responders"]
+
+evaluation_17:
+  question: "Do you prefer a counsellor with expertise in a specific religion or spirituality?"
+  type: "check_box"
+  choices: ["Judaism", "Islam", "Atheism"]
+
+evaluation_18:
+  question: "What is your general availability?"
+  type: "check_box"
+
+details:
+  title: "Your Details"
+  subtitle: "This information is needed for safety reasons and to match you to a local provider."
+
+matches:
+  title: "Your Matches"
+  subtitle: "Below are the practitioners that are the best fit based on your preferences. If they have not set availability, you will be matched, then we will message the provider to request a session."
+
+phone_verification:
+  title: "This is a reminder that a verified number is needed for security and safety purposes."

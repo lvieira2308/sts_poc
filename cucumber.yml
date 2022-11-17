@@ -1,0 +1,44 @@
+<%
+  parallel_file_path = 'reports/parallel'
+  sequential_file_path = 'reports/sequential'
+  final_reports_path = 'reports/final_reports'
+  evidences_path = 'reports/evidences'
+  
+  FileUtils.mkdir_p(parallel_file_path)
+  FileUtils.mkdir_p(sequential_file_path)
+  FileUtils.mkdir_p(final_reports_path)
+  FileUtils.mkdir_p(evidences_path)
+  
+  test_batch_id = ENV['TEST_ENV_NUMBER']
+  retry_id = Time.now.strftime("T%H_%M_%S_%L")
+%>
+
+parallel: -p web -p parallel_parameter DEVICE_THREAD=web_<%= test_batch_id %> -p report_parallel_json -p report_parallel_html -p cucumber_failures_logger -f pretty
+report_parallel_json: DEVICE_THREAD=web_<%= test_batch_id %> --format pretty -f json --out <%= parallel_file_path %>/<%= test_batch_id %>_.json
+report_parallel_html: DEVICE_THREAD=web_<%= test_batch_id %> --format pretty -f html --out <%= parallel_file_path %>/<%= test_batch_id %>_.html
+report_parallel_rerun:  -p parallel_parameter -p web -p report_parallel_html_web_rerun -p report_parallel_json_web_rerun -p disable_warning_cucumber_report
+report_parallel_html_rerun: DEVICE_THREAD=web_<%= test_batch_id %> --format pretty -f html --out <%= parallel_file_path %>/<%= test_batch_id %>_rerun.html
+report_parallel_json_rerun: DEVICE_THREAD=web_<%= test_batch_id %> --format pretty -f json --out <%= parallel_file_path %>/<%= test_batch_id %>_rerun.json
+
+parallel_parameter: PARALLEL=true
+
+sequential: -p web -p report_sequential_json -p cucumber_failures_logger
+report_sequential_json: --format pretty --format json --out <%= sequential_file_path %>/report_features.json
+report_rerun: -p report_html_web_rerun -p report_json_web_rerun -p disable_warning_cucumber_report
+report_html_web_rerun: --format pretty --format html --out <%= sequential_file_path %>/report_rerun_features_<%= retry_id %>.html
+report_json_web_rerun: --format pretty --format json --out <%= sequential_file_path %>/report_rerun_features_<%= retry_id %>.json
+
+cucumber_failures_logger: --format ParallelTests::Cucumber::FailuresLogger --out cucumber_failures.log
+disable_warning_cucumber_report: --publish-quiet
+
+chrome: BROWSER=chrome CHROME=true
+chrome_headless: BROWSER=chrome HEADLESS=true CHROME=true
+firefox: BROWSER=firefox FIREFOX=true
+firefox_headless: BROWSER=firefox HEADLESS=true FIREFOX=true
+
+web: PLATFORM=web WEB=true
+
+  ## Environments ###
+
+stg_p: ENVIRONMENT=stg_t MAIN_URL="https://staging.inkblotpractice.com/"
+stg_t: ENVIRONMENT=stg_p MAIN_URL="https://staging.inkblottherapy.com/"

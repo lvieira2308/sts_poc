@@ -13,6 +13,12 @@ task :parallel_tests, [:tag, :browser, :env, :threads, :other] do | _task, args|
   parallel( args[:tag], args[:browser],args[:env], args[:threads], other_args)
 end
 
+desc 'Run Circle CI Parallel Tests'
+task :parallel_tests_circle_ci, [:tag, :browser, :env, :threads, :build, :other] do | _task, args|
+  set_build(:build, :browser, :tag)
+  other_args = get_other_args(args[:other])
+  parallel( args[:tag], args[:browser],args[:env], args[:threads], other_args)
+end
 def parallel(tag, browser, environment, threads, args)
   clean_project
   puts '================== STARTING =================='
@@ -172,4 +178,9 @@ def get_other_args(arg)
     raise "Invalid argument" unless arg.nil?
   end
   args
+end
+
+def set_build(build, browser, tag)
+  tag = tag.delete('@')
+  ENV['BUILD_NAME'] = "[WEB_#{browser.uppercase}]_BUILD:#{build}_SCOPE:#{tag}"
 end

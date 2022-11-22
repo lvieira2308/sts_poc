@@ -1,0 +1,123 @@
+version: 2.1
+
+orbs:
+  ruby: circleci/ruby@0.1.2
+  slack: circleci/slack@4.4.2
+
+jobs:
+  run_automation:
+    docker:
+      - image: circleci/ruby:2.6.3-stretch-node
+    parameters:
+      tag:
+        type: string
+      browser:
+        type: string
+      env_profile:
+        type: string
+      threads:
+        type: string
+    steps:
+      - poc
+      - run:
+          name: Which bundler?
+          command: bundle -v
+      - ruby/bundle-install
+      - run:
+          name: Running rake command
+          command: bundle exec rake "parallel_tests_circle_ci[<<parameters.tag>>, <<parameters.browser>>, <<parameters.env_profile>>, <<parameters.threads>>, ${CIRCLE_BUILD_NUM}]"
+      - store_artifacts:
+          path: reports/final_reports
+          destination: parallel_report
+      - slack/notify:
+          event: fail
+          mentions: '@Francisco Santos'
+          custom: |
+            {
+            "blocks": [
+            {
+            "type": "section",
+            "fields": [
+              {
+                "type": "plain_text",
+                "text": ":x: Ops, one or more tests have failed! :x: \n \n :skull_and_crossbones: :no_entry_sign: :warning:",
+                "emoji": true
+              }
+            ]
+            },
+            {
+            "type": "section",
+            "fields": [
+              {
+                "type": "plain_text",
+                "text": "AUTOMATION RESULTS - BUILD: ${CIRCLE_BUILD_NUM} \n \n EXECUTION TYPE: <<parameters.execution_type>> \n \n PLATFORM: <<parameters.platform>>  :<<parameters.platform>>: \n \n SCOPE: <<parameters.tag>> :mag: \n \n DEVICE: <<parameters.device>> :iphone: \n \n",
+                "emoji": true
+              }
+            ]
+            },
+            {
+            "type": "actions",
+            "elements": [
+              {
+                "type": "button",
+                "text": {
+                  "type": "plain_text",
+                  "text": "Test Report",
+                  "emoji": true
+                },
+                "value": "Access test report",
+                "url": "https://app.circleci.com/pipelines/github/lvieira2308/poc_inkblot-therapy/1/workflows/${CIRCLE_WORKFLOW_ID}/jobs/${CIRCLE_BUILD_NUM}/artifacts"
+              }
+            ]
+            },
+            {
+              "type": "divider"
+            }
+            ]
+            }
+      - slack/notify:
+          event: pass
+          mentions: '@Luis Vieira'
+          custom: |
+            {
+              "blocks": [
+                {
+                  "type": "section",
+                  "fields": [
+                    {
+                      "type": "plain_text",
+                      "text": ":white_check_mark: All tests have passed successfully! :white_check_mark: \n \n :partying_face: :tada: :confetti_ball: \n \n \n",
+                      "emoji": true
+                    }
+                  ]
+                },
+                {
+                  "type": "section",
+                  "fields": [
+                    {
+                      "type": "plain_text",
+                      "text": "AUTOMATION RESULTS - BUILD: ${CIRCLE_BUILD_NUM} \n \n EXECUTION TYPE: <<parameters.execution_type>> \n \n PLATFORM: <<parameters.platform>>  :<<parameters.platform>>: \n \n SCOPE: <<parameters.tag>> :mag: \n \n DEVICE: <<parameters.device>> :iphone: \n \n",
+                      "emoji": true
+                    }
+                  ]
+                },
+                {
+                  "type": "actions",
+                  "elements": [
+                    {
+                      "type": "button",
+                      "text": {
+                        "type": "plain_text",
+                        "text": "Test Report",
+                        "emoji": true
+                      },
+                      "value": "Access test report",
+                      "url": "https://app.circleci.com/pipelines/github/lvieira2308/poc_inkblot-therapy/143/workflows/${CIRCLE_WORKFLOW_ID}/jobs/${CIRCLE_BUILD_NUM}/artifacts"
+                    }
+                  ]
+                },
+                {
+                    "type": "divider"
+                }
+              ]
+            }

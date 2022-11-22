@@ -152,3 +152,19 @@ workflows:
             branches:
               only:
                 - feature/develop
+  Android-Payment-Schedule:
+    triggers:
+      - schedule:
+          cron: "0 9,13,18,21 * * *"
+          filters:
+            branches:
+              only:
+                - feature/develop
+    jobs:
+      - run_automation:
+          tag: "@poc"
+          browser: "chrome"
+          env_profile: "stg_t"
+          threads: "1"
+
+

@@ -2,19 +2,22 @@ require 'report_builder'
 require 'pry'
 
 desc 'Run Sequential Tests'
-task :sequential_tests, [:tag, :browser, :env, :other] do | _task, args|
+task :sequential_tests, [:tag, :browser, :env, :jira, :other] do | _task, args|
+  set_jira_reference(args[:jira])
   other_args = get_other_args(args[:other])
   sequential( args[:tag], args[:browser], args[:env], other_args)
 end
 
 desc 'Run Parallel Tests'
-task :parallel_tests, [:tag, :browser, :env, :threads, :other] do | _task, args|
+task :parallel_tests, [:tag, :browser, :env, :threads, :jira, :other] do | _task, args|
+  set_jira_reference(args[:jira])
   other_args = get_other_args(args[:other])
   parallel( args[:tag], args[:browser],args[:env], args[:threads], false, other_args)
 end
 
 desc 'Run Circle CI Parallel Tests'
-task :parallel_tests_circle_ci, [:tag, :browser, :env, :threads, :build, :other] do | _task, args|
+task :parallel_tests_circle_ci, [:tag, :browser, :env, :threads, :jira, :build, :other] do | _task, args|
+  set_jira_reference(args[:jira])
   set_build(:build, :browser, :tag)
   other_args = get_other_args(args[:other])
   parallel( args[:tag], args[:browser],args[:env], args[:threads], true, other_args)
@@ -183,4 +186,9 @@ end
 def set_build(build, browser, tag)
   tag = tag.delete('@')
   ENV['BUILD_NAME'] = "[WEB_#{browser.uppercase}]_BUILD:#{build}_SCOPE:#{tag}"
+end
+
+def set_jira_reference(jira)
+  jira = jira.upcase.sub("JIRA-","").strip
+  File.open("jira.txt", 'w') { |file| file.write(jira) }
 end

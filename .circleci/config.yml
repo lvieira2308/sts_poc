@@ -19,6 +19,8 @@ jobs:
         type: string
       threads:
         type: string
+      jira:
+        type: string
     steps:
       - checkout
       - run:
@@ -27,7 +29,7 @@ jobs:
       - ruby/bundle-install
       - run:
           name: Running rake command
-          command: bundle exec rake "parallel_tests_circle_ci[<<parameters.tag>>, <<parameters.browser>>, <<parameters.env_profile>>, <<parameters.threads>>, ${CIRCLE_BUILD_NUM}]"
+          command: bundle exec rake "parallel_tests_circle_ci[<<parameters.tag>>, <<parameters.browser>>, <<parameters.env_profile>>, <<parameters.threads>>, <<parameters.jira>>, ${CIRCLE_BUILD_NUM}]"
       - store_artifacts:
           path: reports/final_reports
           destination: parallel_report
@@ -140,6 +142,8 @@ parameters:
   threads:
     type: string
     default: "1"
+  jira:
+    type: string
   run_workflow_ondemand:
     default: false
     type: boolean
@@ -155,24 +159,9 @@ workflows:
           browser: <<pipeline.parameters.browser>>
           env_profile: <<pipeline.parameters.env_profile>>
           threads: <<pipeline.parameters.threads>>
+          jira: <<pipeline.parameters.jira>>
           filters:
             branches:
               only:
                 - feature/develop
-  Android-Payment-Schedule:
-    triggers:
-      - schedule:
-          cron: "0 9,13,18,21 * * *"
-          filters:
-            branches:
-              only:
-                - feature/develop
-    jobs:
-      - run_automation:
-          execution_type: "Schedule"
-          tag: "@poc"
-          browser: "chrome"
-          env_profile: "stg_t"
-          threads: "1"
-
 

@@ -1,8 +1,12 @@
 match = Match.new
 
-Then('I should see the match screen') do
+Then(/I should see the match screen/) do
   expecting(match.match_screen?(action: :displayed), true)
-  expecting(match.match_screen_welcome?(action: :displayed), true)
+  expecting(match.match_screen_welcome?(action: :displayed), true, "Match screen should be displayed")
+end
+
+When(/I should see the continue with matching button/) do
+  expecting(match.continue_matching_button(action: :displayed), true, "Continue with matching button should be displayed")
 end
 
 When('I click to continue with matching') do

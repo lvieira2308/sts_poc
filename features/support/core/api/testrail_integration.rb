@@ -12,10 +12,10 @@ class TestrailIntegration
     time = Time.now.strftime("%m/%d/%Y_%H:%M:%S")
     name = "#{BROWSER} web automation run - : #{time}"
 
-
+    jira = File.read("jira.txt")
     @client.send_post(
       'add_run/1',
-      { :suite_id => 2, :name => name, :case_ids => cases_ids, :include_all => false}
+      { :suite_id => 2, :name => name, :refs => jira, :case_ids => cases_ids, :include_all => false}
     )
   end
 

@@ -21,8 +21,8 @@ Before do |scenario|
   options = BROWSER.eql?('firefox') ? Selenium::WebDriver::Firefox::Options.new : Selenium::WebDriver::Chrome::Options.new
 
   if REMOTE
-    USER_NAME = ENV['BROWSERSTACK_USERNAME'] || "pipopipoka_NSp7hl"
-    ACCESS_KEY = ENV['BROWSERSTACK_ACCESS_KEY'] || "TQgSveAu8Fjx1KqatRBa"
+    USER_NAME = ENV['BROWSERSTACK_USERNAME'] || "your_browserstack_username_here"
+    ACCESS_KEY = ENV['BROWSERSTACK_ACCESS_KEY'] || "your_browserstack_password_here"
 
     options = Selenium::WebDriver::Options.send "chrome"
     $driver = Selenium::WebDriver.for(:remote,
@@ -46,8 +46,10 @@ Before do |scenario|
 
 end
 
-After do
-  attach(scenario_print('end'), 'image/png')
+After do |scenario|
+  $final_result = scenario.passed?
+  $final_attachment = scenario_print('end')
+  attach($final_attachment, 'image/png')
   $driver.quit
   end_log_controller
   create_log_file
@@ -58,6 +60,7 @@ AfterStep do |scenario|
    attach(attachment_path, 'image/png')
 
   if $step_index < $stop_count
+    $steps = @scenario.test_steps
     step_name = @scenario.test_steps[$step_index].text
   end
   $step_index += 2
@@ -73,6 +76,17 @@ end
 
 at_exit do
   puts "Updating TestRail run"
+
+  unless $final_result
+    step_name = $steps[$step_index].text
+    if step_name.include?("#")
+      test_cases = step_name.split("#")
+      test_cases = test_cases[1].gsub("testcase-","").split(" ")
+      test_cases.each do |test_case|
+        $step_results[test_case] = [false, $final_attachment]
+      end
+    end
+  end
 
   $step_results.each do |key, value|
     result_id = $testrail_api.testrail_add_results_for_cases($run_id, key, value[0])

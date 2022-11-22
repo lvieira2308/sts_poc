@@ -9,7 +9,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'httparty'
   spec.add_dependency 'capybara'
   spec.add_dependency 'selenium-webdriver', '~> 4.4.0'
-  spec.add_dependency 'cucumber', '5.1.0'
+  spec.add_dependency 'cucumber', '8.0'
   spec.add_dependency 'parallel_tests', '3.1.0'
   spec.add_dependency 'cuke_modeler', '~> 3.0'
   spec.add_dependency 'rspec', '3.9.0'

@@ -9,6 +9,8 @@ jobs:
     docker:
       - image: circleci/ruby:2.6.3-stretch-node
     parameters:
+      execution_type:
+        type: string
       tag:
         type: string
       browser:
@@ -123,6 +125,9 @@ jobs:
             }
 
 parameters:
+  execution_type:
+    type: string
+    default: "On Demand"
   tag:
     type: string
     default: ""
@@ -145,6 +150,7 @@ workflows:
     when: << pipeline.parameters.run_workflow_ondemand >>
     jobs:
       - run_automation:
+          execution_type: <<pipeline.parameters.execution_type>>
           tag: <<pipeline.parameters.tag>>
           browser: <<pipeline.parameters.browser>>
           env_profile: <<pipeline.parameters.env_profile>>
@@ -163,6 +169,7 @@ workflows:
                 - feature/develop
     jobs:
       - run_automation:
+          execution_type: "Schedule"
           tag: "@poc"
           browser: "chrome"
           env_profile: "stg_t"

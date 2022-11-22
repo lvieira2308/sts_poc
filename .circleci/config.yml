@@ -136,7 +136,7 @@ parameters:
     type: string
     default: "1"
   run_workflow_ondemand:
-    default: true
+    default: false
     type: boolean
 
 workflows:

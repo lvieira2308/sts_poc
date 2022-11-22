@@ -121,3 +121,41 @@ jobs:
                 }
               ]
             }
+
+parameters:
+  execution_type:
+    type: string
+    default: "On Demand"
+  platform:
+    type: string
+    default: ""
+  tag:
+    type: string
+    default: ""
+  device:
+    type: string
+    default: ""
+  version:
+    type: string
+    default: ""
+  retries:
+    type: integer
+    default: 1
+  run_workflow_ondemand:
+    default: false
+    type: boolean
+
+workflows:
+  version: 2.1
+  run_automation:
+    when: << pipeline.parameters.run_workflow_ondemand >>
+    jobs:
+      - run_automation:
+          tag: <<pipeline.parameters.tag>>
+          browser: <<pipeline.parameters.browser>>
+          env_profile: <<pipeline.parameters.env_profile>>
+          threads: <<pipeline.parameters.threads>>
+          filters:
+            branches:
+              only:
+                - feature/develop

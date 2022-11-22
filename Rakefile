@@ -4,26 +4,26 @@ require 'pry'
 desc 'Run Sequential Tests'
 task :sequential_tests, [:tag, :browser, :env, :other] do | _task, args|
   other_args = get_other_args(args[:other])
-  sequential( args[:tag], args[:browser], args[:env],  other_args)
+  sequential( args[:tag], args[:browser], args[:env], other_args)
 end
 
 desc 'Run Parallel Tests'
 task :parallel_tests, [:tag, :browser, :env, :threads, :other] do | _task, args|
   other_args = get_other_args(args[:other])
-  parallel( args[:tag], args[:browser],args[:env], args[:threads], other_args)
+  parallel( args[:tag], args[:browser],args[:env], args[:threads], false, other_args)
 end
 
 desc 'Run Circle CI Parallel Tests'
 task :parallel_tests_circle_ci, [:tag, :browser, :env, :threads, :build, :other] do | _task, args|
   set_build(:build, :browser, :tag)
   other_args = get_other_args(args[:other])
-  parallel( args[:tag], args[:browser],args[:env], args[:threads], other_args)
+  parallel( args[:tag], args[:browser],args[:env], args[:threads], true, other_args)
 end
-def parallel(tag, browser, environment, threads, args)
+def parallel(tag, browser, environment, threads, remote, args)
   clean_project
   puts '================== STARTING =================='
   puts '================== RUNNING =================='
-  system "parallel_cucumber features/ -o '-t \"#{tag}\" -p parallel -p #{environment} -p #{browser}' -n #{threads} --group-by scenarios"
+  system "parallel_cucumber features/ -o '-t \"#{tag}\" -p parallel -p #{environment} #{'-p remote' if remote} -p #{browser}' -n #{threads} --group-by scenarios"
   rerun_parallel_tests_failed(args[:threads], browser, environment) if args[:retry] && File.exist?('cucumber_failures.log') && File.size('cucumber_failures.log') >= 1
   generate_report_builder('parallel', 'web', browser, environment)
 end

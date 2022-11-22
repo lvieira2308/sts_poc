@@ -19,6 +19,7 @@ require_relative 'bridge.rb'
 
 HEADLESS = ENV['HEADLESS'].nil? ? false : true
 WEB = ENV['WEB'].nil? ? false : true
+REMOTE = ENV['REMOTE'].nil? ? false : true
 PLATFORM = ENV['PLATFORM']
 BROWSER = ENV['BROWSER']
 FIREFOX = ENV['FIREFOX'].nil? ? false : true

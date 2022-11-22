@@ -20,20 +20,30 @@ Before do |scenario|
   start_log_controller
   options = BROWSER.eql?('firefox') ? Selenium::WebDriver::Firefox::Options.new : Selenium::WebDriver::Chrome::Options.new
 
-  if HEADLESS
-    options.add_argument('--headless')
-    options.add_argument('--window-size=1920,1080')
+  if REMOTE
+    USER_NAME = ENV['BROWSERSTACK_USERNAME'] || "pipopipoka_NSp7hl"
+    ACCESS_KEY = ENV['BROWSERSTACK_ACCESS_KEY'] || "TQgSveAu8Fjx1KqatRBa"
+
+    options = Selenium::WebDriver::Options.send "chrome"
+    $driver = Selenium::WebDriver.for(:remote,
+                                     :url => "https://#{USER_NAME}:#{ACCESS_KEY}@hub.browserstack.com/wd/hub",
+                                     :capabilities => options)
   else
-    options.add_argument('--window-size=1280,1024')
+    if HEADLESS
+      options.add_argument('--headless')
+      options.add_argument('--window-size=1920,1080')
+    else
+      options.add_argument('--window-size=1280,1024')
+    end
+
+    $driver = Selenium::WebDriver.for BROWSER.downcase.to_sym, {
+      :options => options,
+    }
+
+    $driver.manage.window.maximize unless HEADLESS
   end
 
-  $driver = Selenium::WebDriver.for BROWSER.downcase.to_sym, {
-    :options => options,
-    #:capabilities => caps
-  }
 
-  $driver.manage.window.maximize unless HEADLESS
-  # Selenium::WebDriver.logger.level = :debug
 end
 
 After do

@@ -38,6 +38,8 @@ firefox_headless: BROWSER=firefox HEADLESS=true FIREFOX=true
 
 web: PLATFORM=web WEB=true
 
+remote: REMOTE=true
+
   ## Environments ###
 
 stg_p: ENVIRONMENT=stg_t MAIN_URL="https://staging.inkblotpractice.com/"

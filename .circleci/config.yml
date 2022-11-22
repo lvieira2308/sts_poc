@@ -50,7 +50,7 @@ jobs:
             "fields": [
               {
                 "type": "plain_text",
-                "text": "AUTOMATION RESULTS - BUILD: ${CIRCLE_BUILD_NUM} \n \n EXECUTION TYPE: <<parameters.execution_type>> \n \n PLATFORM: <<parameters.platform>>  :<<parameters.platform>>: \n \n SCOPE: <<parameters.tag>> :mag: \n \n DEVICE: <<parameters.device>> :iphone: \n \n",
+                "text": "AUTOMATION RESULTS - BUILD: ${CIRCLE_BUILD_NUM} \n \n BROWSER: <<parameters.browser>> \n \n SCOPE: <<parameters.tag>>",
                 "emoji": true
               }
             ]
@@ -96,7 +96,7 @@ jobs:
                   "fields": [
                     {
                       "type": "plain_text",
-                      "text": "AUTOMATION RESULTS - BUILD: ${CIRCLE_BUILD_NUM} \n \n EXECUTION TYPE: <<parameters.execution_type>> \n \n PLATFORM: <<parameters.platform>>  :<<parameters.platform>>: \n \n SCOPE: <<parameters.tag>> :mag: \n \n DEVICE: <<parameters.device>> :iphone: \n \n",
+                      "text": "AUTOMATION RESULTS - BUILD: ${CIRCLE_BUILD_NUM} \n \n BROWSER: <<parameters.browser>> \n \n SCOPE: <<parameters.tag>>",
                       "emoji": true
                     }
                   ]

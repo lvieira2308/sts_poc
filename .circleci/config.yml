@@ -144,6 +144,7 @@ parameters:
     default: "1"
   jira:
     type: string
+    default: ""
   run_workflow_ondemand:
     default: false
     type: boolean

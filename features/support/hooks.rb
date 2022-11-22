@@ -93,7 +93,7 @@ at_exit do
     $testrail_api.testrail_add_attachment_result(result_id["id"], value[1])
   end
 
-  $testrail_api.testrail_close_run($run_id)
+  #$testrail_api.testrail_close_run($run_id)
 
   puts "Testrail run successfully updated!"
 end

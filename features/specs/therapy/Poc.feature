@@ -12,12 +12,12 @@ Feature: Poc
     And I click to find a care provider
     And I should see the match screen
     And I click to continue with matching
-    Then I check and interact with the individually container      # testcase-31
-    Then I check and interact with the interpersonally container   # testcase-29
-    Then I check and interact with the socially container     # testcase-28
-    Then I check and interact with the overall container   # testcase-33
-    Then I check and interact with all evaluations
-    Then I should see the personal details screen
+#    Then I check and interact with the individually container      # testcase-28
+#    Then I check and interact with the interpersonally container   # testcase-29
+#    Then I check and interact with the socially container     # testcase-31
+#    Then I check and interact with the overall container   # testcase-33
+#    Then I check and interact with all evaluations
+#    Then I should see the personal details screen
 
 
 

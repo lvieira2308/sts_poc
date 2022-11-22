@@ -123,26 +123,20 @@ jobs:
             }
 
 parameters:
-  execution_type:
-    type: string
-    default: "On Demand"
-  platform:
-    type: string
-    default: ""
   tag:
     type: string
     default: ""
-  device:
+  browser:
     type: string
     default: ""
-  version:
+  env_profile:
     type: string
     default: ""
-  retries:
-    type: integer
-    default: 1
+  threads:
+    type: string
+    default: "1"
   run_workflow_ondemand:
-    default: false
+    default: true
     type: boolean
 
 workflows:

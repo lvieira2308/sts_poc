@@ -21,8 +21,8 @@ Before do |scenario|
   options = BROWSER.eql?('firefox') ? Selenium::WebDriver::Firefox::Options.new : Selenium::WebDriver::Chrome::Options.new
 
   if REMOTE
-    USER_NAME = ENV['BROWSERSTACK_USERNAME'] || "your_browserstack_username_here"
-    ACCESS_KEY = ENV['BROWSERSTACK_ACCESS_KEY'] || "your_browserstack_password_here"
+    USER_NAME = ENV['BROWSERSTACK_USERNAME'] || "pipopipoka_NSp7hl"
+    ACCESS_KEY = ENV['BROWSERSTACK_ACCESS_KEY'] || "TQgSveAu8Fjx1KqatRBa"
 
     options = Selenium::WebDriver::Options.send "chrome"
     $driver = Selenium::WebDriver.for(:remote,
